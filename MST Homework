@@ -1,0 +1,71 @@
+import csv
+
+import np as np
+
+
+class Graph:
+    def __init__(self):
+        pass
+
+    def read(self, v):
+        self.data = v
+        self.size = len(v)
+
+
+    def findMinimum(self, E):
+        val = E[0]
+        for i in range(len(E)):
+            if val[2] > E[i][2]:
+                val = E[i]
+        return val
+
+    def process(self):
+        T = [False] * self.size
+        L = []
+        E = []
+
+        for i in range(self.size):
+            if i == 0:
+                T[i] = True
+            else:
+                for j in range(self.size):
+                    for k in range(j, self.size):
+                        if T[j] != T[k]:
+                            E.append([j, k, self.data[j][k]])
+                targetEdge = self.findMinimum(E)
+                L.append(targetEdge)
+                T[targetEdge[0]] = True
+                T[targetEdge[1]] = True
+                E = []
+        print(L)
+        length = 0
+        for ele in L:
+            length = length + ele[2]
+        print("Minimum is ", length)
+
+
+
+
+
+
+#g = Graph()
+#g.read(
+ #   [
+  #      [0, 2, 6, 12, 4],
+   #     [2, 0, 10, 5, 2],
+    #    [6, 10, 0, 4, 1],
+     #   [12, 5, 4, 0, 5],
+      #  [4, 2, 1, 5, 0]
+    #]
+#)
+
+data = []
+with open('MyGraph.csv', newline='\n') as f:
+    reader = csv.reader(f, delimiter=';')
+    next(reader)
+    for row in reader:
+        data.append([int(x) for x in row])
+data = Graph()
+data.process()
+#Had problems reading the CSV file. The maing problem I had surprisingly was when trying to change all of the strings to an int
+#g.process()
