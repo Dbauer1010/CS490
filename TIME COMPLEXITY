@@ -1,0 +1,44 @@
+import random
+from random import randint
+import timeit
+
+def createarray():
+    arr = []
+    for i in range(1000000):
+        arr.append(random.randint(0, 1000000))
+    return arr
+
+def SCAN(p):
+    n = len(p)
+    for i in range(n - 1):
+        for j in range(i + 1, n):
+            if p[i] == p[j]:
+                print(i, " - ", j)
+                print(p[i])
+                return
+            else:
+                continue
+    return
+
+def STOR(h):
+    n = len(h)
+    d = [0] * 1000000
+    for i in range(n):
+        if d[h[i]] == 1:
+            print("duplicate when i = ", i)
+            print(h[i])
+            return
+        else:
+            d[h[i]] = 1
+
+jlist = createarray()
+SCAN(jlist)
+STOR(jlist)
+def test1():
+    SCAN(jlist)
+
+def test2():
+    STOR(jlist)
+
+print(timeit.Timer(test1).timeit(number=100))#7.0678263999999995
+print(timeit.Timer(test2).timeit(number=100))#0.4886835999999999
