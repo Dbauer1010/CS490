@@ -1,0 +1,91 @@
+import random
+import timeit
+
+from numpy.random import seed
+from numpy.random import shuffle
+
+seed(1)
+
+def Arr(a, b, c):
+    dv = [random.randrange(a, b) for i in range(c)]
+    shuffle(dv)
+    return dv
+
+def swap(a, i, j):
+    t = a[i]
+    a[i] = a[j]
+    a[j] = t
+
+def SelectionS(arr):
+    size = len(arr)
+    for i in range(size - 1):
+        k = i
+        for j in range(i, size):
+            if arr[k] > arr[j]:
+                k = j
+        swap(arr, i, k)
+    return arr
+
+def InsertionS(arr):
+    size = len(arr)
+    for i in range(1, size):
+        k = i
+        v = arr[k]
+        while k > 0 and arr[k-1] > v:
+            swap(arr, k - 1, k)
+            k = k - 1
+    return arr
+
+def BubbleS(arr):
+    size = len(arr)
+    for i in range(size - 1):
+        for j in range(0, size - i - 1):
+            if(arr[j] > arr[j+1]):
+                swap(arr, j, j + 1)
+    return arr
+
+test = Arr(1, 100, 10)
+test2 = Arr(1, 100, 1000)
+test3 = Arr(1, 100, 100000)
+
+def Stest1():
+    SelectionS(test)
+
+def Stest2():
+    SelectionS(test2)
+
+def Stest3():
+    SelectionS(test3)
+
+def Itest():
+    InsertionS(test)
+
+def Itest2():
+    InsertionS(test2)
+
+def Itest3():
+    InsertionS(test3)
+
+def Btest():
+    BubbleS(test)
+
+def Btest2():
+    BubbleS(test2)
+
+def Btest3():
+    BubbleS(test3)
+
+
+
+#print(test)
+#print(test2)
+#print(test3)
+print(timeit.Timer(Stest1).timeit(number=100))#0.00061769
+print(timeit.Timer(Stest2).timeit(number=100))#3.4666618
+#print(timeit.Timer(Stest3).timeit(number=100))
+print(timeit.Timer(Itest).timeit(number=100))#0.0001198
+print(timeit.Timer(Itest2).timeit(number=100))#0.0107429
+#print(timeit.Timer(Itest3).timeit(number=100))
+print(timeit.Timer(Btest).timeit(number=100))#0.0009363
+print(timeit.Timer(Btest2).timeit(number=100))#4.8904542
+#print(timeit.Timer(Btest3).timeit(number=100))
