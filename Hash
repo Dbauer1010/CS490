@@ -1,0 +1,81 @@
+text = """COME away come away death And in sad cypres let me be laid Fly away fly away breath I am slain by a fair cruel maid My shroud of white stuck all with yew O prepare it My part of death no one so true Did share it Not a flower not a flower sweet On my black coffin let there be strown Not a friend not a friend greet My poor corse where my bones shall be thrown A thousand thousand sighs to save Lay me O where Sad true lover never find my grave To weep there"""
+
+arr = text.split(' ')
+print(arr)
+
+class HashTable1:
+    M = 101
+
+    def __init__(self):
+        self.array = [None] * self.M
+
+    def Hash(self, key):
+        return key % self.M
+
+    def insert(self, key, value):
+        hashcode = self.Hash(key)
+        found = len(self.array[hashcode]) > 0
+        if found is True:
+            for i in range(self.array[hashcode]):
+                if self.array[hashcode][i]["key"] == key:
+                    self.array[hashcode][i]["index"].append(value["index"][0])
+                    return hashcode
+
+            self.array[hashcode].append(value)
+            return hashcode
+        else:
+            self.array[hashcode].append(value)
+
+    def Search(self, key):
+        hashcode = self.Hash(key)
+        if len(self.array[hashcode]) > 0:
+            for i in range(len(self.array[hashcode])):
+                if self.array[hashcode][i]["key"] == key:
+                    return self.array[hashcode][i]["index"]
+            return None
+        else:
+            return None
+
+class HashTable2:
+    M = 101
+    g = 5**(1/2)
+
+    def __init__(self):
+        self.array = [None] * self.M
+        self.count = 0
+
+    def IsFull(self):
+        self.count == self.M
+
+    def Hash(self, key):
+        a = key * self.g
+        f = a - int(a)
+        return int(f * self.M)
+
+    def insert(self, key, value):
+        hashcode = self.Hash(key)
+        if self.IsFull():
+            return None
+        else:
+            if self.array[hashcode] is None:
+                self.array[hashcode] = value
+            else:
+                if self.array[hashcode + 1] is None:
+                    self.array[hashcode + 1] = value
+                else:
+                    if self.array[hashcode + 2] is None:
+                        self.array[hashcode + 2] = value
+                    else:
+                        None
+
+    def insert2(self, string):
+        hashtablesize = 20
+        index = self.Hash(string)
+        while(self.array[index] != ""):
+            index = (index + 1) % hashtablesize
+        self.array[index] = string
+
+
+HashTable10 = HashTable1()
+HashTable20 = HashTable2()
+HashTable10.array = arr
