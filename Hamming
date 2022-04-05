@@ -1,0 +1,62 @@
+import math
+
+class HammingCode:
+    def __init__(self, n):
+        self.n = n
+        self.k = 0
+        while math.pow(2, self.k) < self.n + self.k + 1:
+            self.k = self.k + 1
+
+    def encode(self, input):
+        bit_array = [0] * (self.n + self.k)
+        current_power = 0
+        for i in range(len(bit_array)):
+            if i == math.pow(2, current_power):
+                current_power = current_power
+            else:
+                bit_array[i] = input
+
+        for i in range(self.k):
+            index = int(math.pow(2, i))
+            sum = 0
+            for position in range(len(bit_array)):
+                binaryIndex = self.reverseList(self.decimalToBinary(position+1))
+                if len(binaryIndex) > i and binaryIndex[i] == '1':
+                    sum = sum + int(bit_array[position])
+            bit_array[index] = str(sum % 2)
+        result = ''
+        for i in bit_array:
+            result = i + result
+        return result
+
+    def decimalToBinary(self, dec):
+        return bin(dec).replace('0b', '')
+
+    def reverseList(self, arr):
+        result = []
+        for i in arr:
+            result.insert(0, i)
+        return result
+
+    def detectError(self, arr, nr):
+        n = len(arr)
+        res = 0
+
+        for i in range(nr):
+            val = 0
+            for j in range(1, n + 1):
+                if (j & (2 ** i) == (2 ** i)):
+                    val = val ^ int(arr[-1 * j])
+            res = res + val * (10 ** i)
+        return int(str(res), 2)
+
+    def text_to_bits(self, text, encoding="utf-8", errors="surrogatepass"):
+        bits = bin(int.from_bytes(text.encode(encoding, errors), "big"))[2:]
+        return bits.zfill(8 * ((len(bits) + 7) // 8))
+
+    def text_from_bits(self, bits, encoding="utf-8", errors="surrogatepass"):
+        n = int(bits, 2)
+        return n.to_bytes((n.bit_length() + 7) // 8, "big").decode(encoding, errors) or "\0"
+
+code = HammingCode(4)
+print(code.encode('1000'))
