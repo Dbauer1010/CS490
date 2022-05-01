@@ -1,0 +1,74 @@
+def matrixLevel1():
+    A = [[5, 4, 3], [5, 4, 3], [3, 3, 3], [3, 3, 3],
+         [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3],
+         [6, 2, 2], [6, 2, 2]]
+    return A
+
+def matrixLevel2():
+    B = [[5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3],
+         [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3],
+         [6, 2, 2], [6, 2, 2], [6, 2, 2], [6, 2, 2], [6, 2, 2]]
+    return B
+
+def matrixLevel3():
+    C = [[5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3], [5, 4, 3],
+         [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3],
+         [6, 2, 2], [6, 2, 2], [6, 2, 2], [6, 2, 2], [6, 2, 2], [6, 2, 2]]
+    return C
+
+def MainBin():
+    main = [12, 9, 6]
+    return main
+
+def findVolume(matrix):
+    endingarray = []
+    for i in range(len(matrix)):
+        j = 0
+        endingarray.append(matrix[i][j] * matrix[i][j + 1] * matrix[i][j + 2])
+    return endingarray
+
+def howMany(volumearray):
+    big = 648
+    count = 1
+    for i in range(len(volumearray)):
+        if big < 0:
+            big = 648
+            count = count + 1
+        elif(big - volumearray[i] < 0):
+            big = 648
+            count = count + 1
+        else:
+            big = big - volumearray[i]
+    return count
+
+class Bin:
+    def __init__(self):
+     self.list = []
+
+    def addItem(self, item):
+        self.list.append(item)
+
+    def removeItem(self, item):
+        self.list.remove(item)
+
+    def sum(self):
+        total = 0
+        for elem in self.list:
+            total += elem
+        return total
+
+    def show(self):
+        return self.list
+
+
+
+array1 = findVolume(matrixLevel1())
+array2 = findVolume(matrixLevel2())
+array3 = findVolume(matrixLevel3())
+int1 = howMany(array1)
+int2 = howMany(array2)
+int3 = howMany(array3)
+
+print("The amount of bins needed is", int1)
+print("The amount of bins needed is", int2)
+print("The amount of bins needed is", int3)
